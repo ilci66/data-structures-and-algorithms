@@ -73,10 +73,29 @@ class LinkedList:
         temp.next = None
 
     def insert(self, index, value):
-        # temp = self.head
-        # nth = 0
-        # while(temp):
-        #     if(nth == index):
+        toInsert = Node(value)
+        temp = self.head
+        nth = 0
+        while(temp):
+            if(nth == index):
+                oldTempNext = temp.next
+                toInsert.next = oldTempNext
+                temp.next = toInsert
+
+            temp = temp.next
+            nth += 1
+
+    def erase(self, index):
+        temp = self.head
+        nth = 0
+        while(temp):
+            if(nth == index):
+                print(temp.data,index, nth)
+                #handle this after your break
+
+            temp = temp.next
+            nth += 1
+
 
 
 
@@ -111,3 +130,9 @@ if __name__ == '__main__':
     # s_l_list.printList()
     # print(s_l_list.front())
     # print(s_l_list.back())
+    #s_l_list.printList()
+    #s_l_list.insert(1, 77)
+    #s_l_list.printList()
+
+    s_l_list.erase(1)
+    s_l_list.printList()
