@@ -127,7 +127,7 @@ class LinkedList:
 
 
     # Going with the iterative way of doing this because the space complexity is O(1)
-    # def reverse(self): # Iterative
+    # def reverse(self): # Iterative time O(n), space O(1)
     #     prev = None
     #     current = self.head
     #     while(current):
@@ -137,17 +137,38 @@ class LinkedList:
     #         current = next
     #         # print("current", current.data)
     #     self.head = prev # I forgot about the head for like 10 mins
-    #
-    def reverse(self, node): # recursive
+
+    def reverse(self, node): # recursive  time O(n), space O(n)
         if(node == None):
+            print("node is:", node.data)
             return node
-        if(node.next):
+        if(node.next == None):
+            print("node is, no next:", node.data)
+            self.head = node
             return node
 
         node1 = self.reverse(node.next) # call recursively until we hit the base
         node.next.next = node # points to itself
         node.next = None
         return node1
+
+    # remove_value(value) - removes the first item in the list with this value
+    def remove_value(self, value):
+        current = self.head
+        prev = None
+        if(self.head.data == value):
+            self.head = self.head.next
+
+        while (current):
+            if(current.data == value):
+                prev = current
+                current = current.next
+                prev.next = current
+
+            prev = current
+            current = current.next
+
+
 
 if __name__ == '__main__':
     # initialize with an empty list
@@ -159,12 +180,12 @@ if __name__ == '__main__':
     second = Node(2)
     third = Node(3)
     fourth = Node(4)
-
+    fifth = Node(3)
     # chain'em up
     s_l_list.head.next = second
     second.next = third
     third.next = fourth
-
+    fourth.next = fifth
     # s_l_list.printList()
     # s_l_list.get_size()
     # s_l_list.isEmpty()
@@ -192,5 +213,9 @@ if __name__ == '__main__':
 
     # s_l_list.value_n_from_end(0)
     # s_l_list.reverse() # for the iterative method
-    s_l_list.reverse(s_l_list.head) # call the method with the current head
+    # s_l_list.printList()
+    # s_l_list.reverse(s_l_list.head) # call the method with the current head
+    # s_l_list.printList()
+
+    s_l_list.remove_value(1)
     s_l_list.printList()
