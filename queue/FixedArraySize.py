@@ -1,4 +1,5 @@
 # Implement using fixed-sized array:
+# Didn't wanna use append, pop etc'
 class FixedSizedArray:
     def __init__(self, capacity):
         self.my_queue = [None] * capacity
