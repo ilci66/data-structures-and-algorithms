@@ -22,22 +22,45 @@ class HashLinearProbing:
 # - exists(key)
     def exists(self, key):
         h = self.get_hash(key)
+        wanted_arr = self.arr[h]
+        for i in wanted_arr:
+            if (i[key]):
+                return True
+        return False
 
 # - get(key)
     def __getitem__(self, key):
         h = self.get_hash(key)
-        print("fget item", self.arr[h])
-        for k, v in self.arr[h]:
-            print("ye")
-            # print(k,v)
-        # if (self.exists(key)):
+        wanted_arr = self.arr[h]
+        for i in wanted_arr:
+            if (i[key]):
+                return i[key]
+        print ("not here")
 
 
 # - remove(key)
+    def remove(self, key):
+        h = self.get_hash(key)
+        wanted_arr = self.arr[h]
+        for i in wanted_arr:
+            for k in i:
+                if (k == key):
+                    wanted_arr.remove(i)
+                    return
+        print ("not here")
+
+
 
 if __name__ == '__main__':
     h_l_p = HashLinearProbing()
     h_l_p.__setitem__("cats", 55)
+    h_l_p.__setitem__("cats", 525)
+    h_l_p.__setitem__("camels", 12)
+    h_l_p.__setitem__("ratss", 34)
     h_l_p.__setitem__("dogs", 12)
-    print("asddda", h_l_p.__getitem__("cats"))
-    print("asd", h_l_p.arr)
+    h_l_p.__setitem__("su", 12)
+    # print("asddda", h_l_p.__getitem__("cats"))
+    # print("exists ? ==>", h_l_p.exists("catsa"))
+    print("the whole array ==> ", h_l_p.arr)
+    print("delete: ", h_l_p.remove("dogs"))
+    print("the whole array ==> ", h_l_p.arr)
