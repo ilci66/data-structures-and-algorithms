@@ -7,10 +7,10 @@ class BST:
 
 # - insert // insert value into tree
     def insert(self,val):
+        if self.val == val: # no duplicate
+            return
         if not self.val: # if there's no value set it
             self.val = val
-            return
-        if self.val == val:  # no duplicate
             return
         if self.val > val:
             if self.left:
@@ -66,6 +66,8 @@ if __name__ == '__main__':
     b_s_t.insert(5)
     b_s_t.insert(25)
     b_s_t.insert(35)
+    b_s_t.insert(45)
+    b_s_t.insert(40)
     b_s_t.insert(30)
 
     b_s_t.print_values()
