@@ -38,6 +38,7 @@ class BinarySearchTree:
             if current.val < val:
                 current = current.right
             if current.val == val:
+                print("found it", current.val)
                 if current.left and current.right == None:
                     current.val = val
                     current.left = current.left.left
@@ -48,18 +49,23 @@ class BinarySearchTree:
                     current.right = current.right.right
                     self.count -= 1
                     return
-                elif current.left == None and current.right == None:
-                    current.val = None
-                    self.count -= 1
-                    return
-                elif current.left and current.right: # get the lowest in the right or highest in the left
-                    print(current.left.val,"<--left, right-->", current.right.val)
-                    change = current
-                    current = current.left
-                    while current:
-                        current = current.right
-                    print(change.val)
-                    print(current.val)
+                return
+                # elif current.left == None and current.right == None:
+                #     current.val = None
+                #     self.count -= 1
+                #     return
+                # elif current.left and current.right: # get the lowest in the right or highest in the left
+                #     print(current.left.val,"<--left, right-->", current.right.val)
+                #     to_change = current
+                #     current = current.left
+                #     if current:
+                #         while current.right != None:
+                #             current = current.right
+                #
+                #     # print("change",to_change.val)
+                #     # print("current to replace change:", current.val)
+                #     to_change.val = current.val
+                #     current.val = None
 
     def get_count(self):
         return self.count
