@@ -104,12 +104,46 @@ class BST:
         self.right = self.right.delete_value(min_larger_node.val)
         return self
 
+
+    def find_value(self,val):
+        if val == self.val:
+            return self
+
+        if val < self.val:
+            if self.left == None:
+                return False
+            return self.left.find_value(val)
+        if self.right == None:
+            return False
+        return self.right.find_value(val)
+
+    # this one's mainly for the successor
+    def find_min(self ,node):
+        while node.left:
+            node = node.left
+        return node
 # - get_successor // returns next - highest value in tree after given value, -1 if none
     def get_successor(self, val):
-        # ok I get the idea,
-        # find the val if it exists
-        # then get the parent it doesn't have a right node
-        pass
+
+        # find the val if it exists, gonna use a method for that
+        current = self.find_value(val)
+        if current == None:
+            return None
+        if current.right != None:
+            return self.find_min(current.right).val
+        else:
+            # then get the parent it doesn't have a right node
+            successor = None
+            ancestor = self
+            while ancestor != current:
+                if current.val < ancestor.val:
+                    successor = ancestor
+                    ancestor = ancestor.val
+                else:
+                    ancestor = ancestor.right
+            return successor.val
+
+
 
 if __name__ == '__main__':
     nums = [12, 6, 18, 19, 21, 11, 3, 5, 4, 24, 18, 20, 2]
@@ -121,3 +155,4 @@ if __name__ == '__main__':
     bst.delete_value(21)
     print(bst.print_values([]))
     print(11 ,"in tree?", bst.is_in_tree(11))
+    print("sucessor of", 3, "is", bst.get_successor(3))
