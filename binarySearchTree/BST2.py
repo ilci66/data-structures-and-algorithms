@@ -131,7 +131,7 @@ if __name__ == '__main__':
     print("min: ",b_s_t.get_max())
 
     b_s_t.print_values(b_s_t.root)
-    b_s_t.delete_value(70)
+    b_s_t.delete_value(30)
     print("after the deletion")
     b_s_t.print_values(b_s_t.root)
 
