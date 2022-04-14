@@ -24,8 +24,14 @@ class BST:
 
 
 # - get_node_count // get count values stored
-    def get_node_count(self):
-        pass
+    def get_node_count(self, vals):
+        if self.left is not None:
+            self.left.get_node_count(vals)
+        if self.val is not None:
+            vals.append(self.val)
+        if self.right is not None:
+            self.right.get_node_count(vals)
+        return len(vals)
 
 # - print_values // prints the values in the tree, from min to max
     def print_values(self, vals):
@@ -37,11 +43,20 @@ class BST:
             self.right.print_values(vals)
         return vals
 
+    def free_node(self, node):
+        node.val = None
+        node.left = None
+        node.right = None
 
-
+    def delete(self, node):
+        if node == None:
+            return
+        self.delete(node.left)
+        self.delete(node.right)
+        self.free_node(node)
 # - delete_tree
     def delete_tree(self):
-        pass
+        return self.delete(self)
 
 # - is_in_tree // returns true if given value exists in the tree
     def is_in_tree(self,val):
@@ -182,3 +197,6 @@ if __name__ == '__main__':
     print("sucessor of", 3, "is", bst.get_successor(3))
     print("is it a binary search tree: ",bst.is_binary_search_tree([]))
     print("tree height: ", bst.get_height())
+    # bst.delete_tree()
+    # print(bst.print_values([]))
+    print("node count is ", bst.get_node_count([]))
