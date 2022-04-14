@@ -3,7 +3,6 @@ class BST:
         self.val = val
         self.left = None
         self.right = None
-        self.count = 0
 
 # - insert // insert value into tree
     def insert(self, val):
@@ -23,9 +22,10 @@ class BST:
             return
         self.right = BST(val)
 
+
 # - get_node_count // get count values stored
     def get_node_count(self):
-        return self.count
+        pass
 
 # - print_values // prints the values in the tree, from min to max
     def print_values(self, vals):
@@ -56,7 +56,17 @@ class BST:
             return False
         return self.right.is_in_tree(val)
 
+    def counter(self, node):
+        if node == None:
+            return -1
+        left_count = self.counter(node.left)
+        right_count = self.counter(node.right)
+        return max([left_count, right_count]) + 1
 # - get_height // returns the height in nodes(single node 's height is 1)
+#     mine return 0 when there's only one node, acceptable by me
+    def get_height(self):
+        return self.counter(self)
+
 # - get_min // returns the minimum value stored in the tree
     def get_min(self):
         current = self
@@ -72,6 +82,20 @@ class BST:
         return current.val
 
 # - is_binary_search_tree
+    def is_binary_search_tree(self, vals):
+
+        if self.left is not None:
+            if self.left.val > self.val:
+                return False
+            self.left.is_binary_search_tree(vals)
+        if self.val is not None:
+            vals.append(self.val)
+        if self.right is not None:
+            if self.right.val < self.val:
+                return False
+            self.right.is_binary_search_tree(vals)
+
+        return True
 
 
 
@@ -156,3 +180,5 @@ if __name__ == '__main__':
     print(bst.print_values([]))
     print(11 ,"in tree?", bst.is_in_tree(11))
     print("sucessor of", 3, "is", bst.get_successor(3))
+    print("is it a binary search tree: ",bst.is_binary_search_tree([]))
+    print("tree height: ", bst.get_height())
