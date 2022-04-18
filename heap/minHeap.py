@@ -6,12 +6,14 @@ class MinHeap:
     # - insert
     def insert(self, val):
         self.heap_list.append(val)
-        # could ge tthe size ith len but gonna go with count
+        # could ge the size ith len but gonna go with count
         self.count += 1
-        self.sift_up(self.count)
+        # self.sift_up(self.count-1)
 
     # - sift_up - needed for insert
     def sift_up(self, i):
+        # This is a faulty logic which skips over the second item in the list
+        # Gonna think of something else
         while i // 2 > 0:
             if self.heap_list[i] < self.heap_list[i//2]:
                 self.heap_list[i], self.heap_list[i//2] = self.heap_list[i//2], self.heap_list[i]
@@ -38,9 +40,39 @@ class MinHeap:
 
     # - sift_down - needed for extract_max
     def sift_down(self, i):
+        while i*2 <= self.count:
+            # gonna swap with the minimum child
+            m = self.min_child(i)
+            if self.heap_list[i] > self.heap_list[m]:
+                self.heap_list[i], self.heap_list[m] = self.heap_list[m], self.heap_list[i]
+            i = m
 
+    def min_child(self, i):
+        if (i*2)+1 >  self.count:
+            return i*2
+        else:
+            if self.heap_list[2*i] > self.heap_list[(i*2) +1]:
+                return(2 * i)+1
+            else:
+                return 2 * i
 
     # - remove(x) - removes item at index x
+    def remove(self, val):
+
+        for x in self.heap_list:
+            print(x)
     # - heapify - create a heap from an array of elements, needed for heap_sort
     # - heap_sort() - take an unsorted array and turn it into a sorted array in -place using a max heap or min heap
-print(1//2)
+
+if __name__ == '__main__':
+    m_h = MinHeap()
+    m_h.insert(5)
+    m_h.insert(1)
+    m_h.insert(6)
+    # m_h.insert(2)
+    # m_h.insert(4)
+    # m_h.insert(8)
+    # m_h.insert(3)
+
+    print("count is: ", m_h.count)
+    m_h.remove(8)
