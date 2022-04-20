@@ -69,23 +69,54 @@ class ZeroIndexMinHeap:
             if(self.heap_list[x] == val):
                 return x
 
-    # heapify 
-    # heap_sort()
+    # - heapify - create a heap from an array of elements, needed for heap_sort
+    def heapify(self, arr, n, i):
+        min = i
+        l = (2*i) + 1
+        r = (2*i) + 2
+
+        if l < n and arr[min] > arr[l]:
+            min = l
+
+        if r < n and arr[min] > arr[r]:
+            min = r
+
+        if min != i:
+            arr[i], arr[min] = arr[min], arr[i]
+
+            self.heapify(arr, n, min)
+
+    # - heap_sort() - take an unsorted array and turn it into a sorted array in -place using a max heap or min heap
+    def heap_sort(self, arr):
+        n = len(arr)
+
+        for i in range(n//2 -1, -1, -1):
+            self.heapify(arr, n, i)
+
+        for i in range(n-1, 0, -1):
+            arr[i], arr[0] = arr[0], arr[i]
+            self.heapify(arr, i, 0)
 
     def get_list(self):
         return self.heap_list
 
 if __name__ == '__main__':
-    m_h = ZeroIndexMinHeap()
-    m_h.insert(5)
-    m_h.insert(1)
-    m_h.insert(6)
-    m_h.insert(2)
-    m_h.insert(4)
-    m_h.insert(8)
-    m_h.insert(3)
+    # m_h = ZeroIndexMinHeap()
+    # m_h.insert(5)
+    # m_h.insert(1)
+    # m_h.insert(6)
+    # m_h.insert(2)
+    # m_h.insert(4)
+    # m_h.insert(8)
+    # m_h.insert(3)
+    # # print("heap: ", m_h.get_list())
+    # # m_h.extract_min()
+    # # print("heap: ", m_h.get_list())
+    # m_h.remove(2)
     # print("heap: ", m_h.get_list())
-    # m_h.extract_min()
-    # print("heap: ", m_h.get_list())
-    m_h.remove(2)
-    print("heap: ", m_h.get_list())
+
+    arr = [12, 11, 13, 3, 5, 7, 6]
+    m_h2 = ZeroIndexMinHeap()
+    m_h2.heap_sort(arr)
+    for x in range(len(arr)):
+        print("%d" % arr[x]),
