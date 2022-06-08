@@ -8,7 +8,6 @@ class Graph:
         self.V = num
         self.graph = [None] * self.V
 
-    # Add edges
     def add_edge(self, s, d):
         node = AdjNode(d)
         node.next = self.graph[s]
@@ -18,7 +17,6 @@ class Graph:
         node.next = self.graph[d]
         self.graph[d] = node
 
-    # Print the graph
     def print_agraph(self):
         for i in range(self.V):
             print("Vertex " + str(i) + ":", end="")
@@ -28,21 +26,10 @@ class Graph:
                 temp = temp.next
             print(" \n")
 
-    def dfs(self, start, visited=None):
-        print("vertex of the starting node ==> ",self.graph[0].vertex)
-        if visited is None:
-            visited = set()
-        visited.add(start)
-
-        print(start)
-
-        
-
 
 if __name__ == "__main__":
-    V = 5
+    V = 4
 
-    # Create graph and edges
     graph = Graph(V)
     graph.add_edge(0, 1)
     graph.add_edge(0, 2)
@@ -50,11 +37,3 @@ if __name__ == "__main__":
     graph.add_edge(1, 2)
 
     graph.print_agraph()
-    print("dfs ==> ",graph.dfs(graph.graph[0]))
-
-    # An example I added to see more clearly
-    # graph = {'0': set(['1', '2']),
-    #          '1': set(['0', '3', '4']),
-    #          '2': set(['0']),
-    #          '3': set(['1']),
-    #          '4': set(['2', '3'])}
