@@ -36,4 +36,5 @@ if __name__ == "__main__":
     graph.add_edge(0, 3)
     graph.add_edge(1, 2)
 
+    print("graph ==> ", graph.graph)
     graph.print_agraph()
