@@ -26,6 +26,18 @@ class Graph:
                 temp = temp.next
             print(" \n")
 
+    def dfs(self, start, visited=None):
+        if visited is None:
+            visited = set()
+        visited.add(start.vertex)
+
+        print("start ==> ", start)
+
+        for next in graph[start] - visited:
+            self.dfs(graph, next, visited)
+
+        return visited
+
 
 if __name__ == "__main__":
     V = 4
@@ -36,5 +48,6 @@ if __name__ == "__main__":
     graph.add_edge(0, 3)
     graph.add_edge(1, 2)
 
-    print("graph ==> ", graph.graph)
-    graph.print_agraph()
+    # print("graph ==> ", graph.graph)
+    # graph.print_agraph()
+    print(graph.dfs(0))
