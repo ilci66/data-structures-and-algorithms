@@ -28,18 +28,20 @@ class Graph:
 
     def dfs(self, start, visited=None):
         if visited is None:
-            visited = set()
-        visited.add(start)
+            visited = []
+
+        if start not in visited:
+            visited.append(start)
 
         print(start)
-        queue = set()
+        queue = []
 
         temp = self.graph[start]
         while temp:
-            queue.add(temp.vertex)
+            queue.append(temp.vertex)
             temp = temp.next
 
-        for n in queue - visited:
+        for n in list(set(queue) - set(visited)):
             self.dfs(n, visited)
         return visited
 
@@ -51,11 +53,10 @@ if __name__ == "__main__":
 
     graph = Graph(V)
     graph.add_edge(0, 1)
-    graph.add_edge(4, 2)
-    graph.add_edge(2, 3)
-    graph.add_edge(1, 3)
-    graph.add_edge(1, 4)
+    graph.add_edge(0, 2)
+    graph.add_edge(0, 3)
+    graph.add_edge(1, 2)
 
     # print("graph ==> ", graph.graph)
     # graph.print_agraph()
-    print(graph.dfs(2))
+    print(graph.dfs(0))
