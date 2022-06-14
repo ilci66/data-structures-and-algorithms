@@ -5,20 +5,28 @@ class Graph:
 
     def add_edge(self, x, y):
         self.adj[x].append(y)
+        self.adj[y].append(x)
 
     def dfs(self, start):
 
         visited = []
         print(visited)
 
-        # stack= []
-        #
-        # if start not in visited:
-        #     visited.append(start)
-        #
-        # for x in self.adj[start]:
-        #     while(len(stack)):
-        #
+        stack= []
+        stack.append(start)
+
+        while len(stack):
+            x = stack[-1]
+            stack.pop()
+
+            if x not in visited:
+                visited.append(x)
+
+                for node in self.adj[x]:
+                    if node not in visited:
+                        stack.append(node)
+
+        return visited
 
     def print_graph(self):
         print(self.adj)
@@ -30,4 +38,4 @@ g.add_edge(0, 3);
 g.add_edge(1, 2);
 
 g.print_graph()
-g.dfs(0)
+print(g.dfs(2))
