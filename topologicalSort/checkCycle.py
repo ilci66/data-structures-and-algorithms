@@ -1,35 +1,63 @@
-# The logic to to try is this:
-# start going though the dfs
-# keep a stack for the ones that you are currently going trough
-# keep a boolean for checking if the process is still going on
-# if the process has not yet ended and you find a node vertex that is visited
-# that means there is a cycle
+from collections import defaultdict
 
-
-class Graph:
-    def __init__(self, V):
-        self.V = V
+class Graph():
+    def __init__(self, vertices):
+        # self.graph = defaultdict(list)
+        self.V = vertices
         self.graph = [[] for i in range(self.V)]
 
+    def addEdge(self, u, v):
+        self.graph[u].append(v)
 
-    def print_graph(self):
-        print(self.graph)
+    def isCyclicUtil(self, v, visited, recStack):
+
+        visited[v] = True
+        recStack[v] = True
+
+        for neighbour in self.graph[v]:
+            if visited[neighbour] == False:
+                if self.isCyclicUtil(neighbour, visited, recStack) == True:
+                    return True
+            elif recStack[neighbour] == True:
+                return True
+
+        recStack[v] = False
+        return False
+
+    def isCyclic(self):
+        visited = [False] * (self.V + 1)
+        recStack = [False] * (self.V + 1)
+        for node in range(self.V):
+            if visited[node] == False:
+                if self.isCyclicUtil(node, visited, recStack) == True:
+                    return True
+        return False
 
 
-    def add_adge(self, s, e):
-        self.graph[s].append(e)
+# g = Graph(4)
+# g.addEdge(0, 1)
+# g.addEdge(0, 2)
+# g.addEdge(1, 2)
+# g.addEdge(2, 0)
+# g.addEdge(2, 3)
+# g.addEdge(3, 3)
+# if g.isCyclic() == 1:
+#     print("Graph has a cycle")
+# else:
+#     print("Graph has no cycle")
+# #
 
+g2 = Graph(9)
+g2.addEdge(0,1)
+g2.addEdge(0,2)
+g2.addEdge(1,3)
+g2.addEdge(1,5)
+g2.addEdge(3,4)
+g2.addEdge(2,6)
+g2.addEdge(7,2)
+g2.addEdge(2,8)
 
-
-
-if __name__ == "__main__":
-    g = Graph(6)
-    g.add_adge(0,2)
-    g.add_adge(0,1)
-
-    g.print_graph()
-
-# graph1 = {0:{2,1}, 1:{2,4,3}, 2:{0}, 3:{4}, 4:{5}, 5:{3}} # cycle
-# graph2 = {0:{1,2}, 1:{5,3}, 2:{6,8}, 3:{4}, 4:{}, 5:{}, 6:{}, 7:{2}, 8:{}} # no cycle
-
-# cycleCheck(graph2)
+if g2.isCyclic() == 1:
+    print("Graph has a cycle")
+else:
+    print("Graph has no cycle")
