@@ -1,38 +1,37 @@
-from collections import defaultdict
-
 class Graph():
     def __init__(self, vertices):
-        # self.graph = defaultdict(list)
         self.V = vertices
         self.graph = [[] for i in range(self.V)]
 
     def addEdge(self, u, v):
         self.graph[u].append(v)
 
-    def isCyclicUtil(self, v, visited, recStack):
 
+    def isCyclicUtil(self, v, visited, tempStack):
         visited[v] = True
-        recStack[v] = True
+        tempStack[v] = True
 
-        for neighbour in self.graph[v]:
-            if visited[neighbour] == False:
-                if self.isCyclicUtil(neighbour, visited, recStack) == True:
+        for next in self.graph[v]:
+            if visited[next] == False:
+                if self.isCyclicUtil(next, visited, tempStack) == True:
                     return True
-            elif recStack[neighbour] == True:
+            elif tempStack[next] == True:
                 return True
 
-        recStack[v] = False
+        tempStack[v] = False
         return False
+
 
     def isCyclic(self):
-        visited = [False] * (self.V + 1)
-        recStack = [False] * (self.V + 1)
-        for node in range(self.V):
-            if visited[node] == False:
-                if self.isCyclicUtil(node, visited, recStack) == True:
-                    return True
-        return False
+        visited = [False] * self.V
+        tempStack =  [False] * self.V
 
+        for edge in range(self.V):
+            if visited[edge] == False:
+                if self.isCyclicUtil(edge, visited, tempStack) == True:
+                    return True
+
+        return False
 
 # g = Graph(4)
 # g.addEdge(0, 1)
@@ -42,10 +41,10 @@ class Graph():
 # g.addEdge(2, 3)
 # g.addEdge(3, 3)
 # if g.isCyclic() == 1:
-#     print("Graph has a cycle")
+#     print("Graph 1 has a cycle")
 # else:
-#     print("Graph has no cycle")
-# #
+#     print("Graph 1 has no cycle")
+
 
 g2 = Graph(9)
 g2.addEdge(0,1)
@@ -58,6 +57,6 @@ g2.addEdge(7,2)
 g2.addEdge(2,8)
 
 if g2.isCyclic() == 1:
-    print("Graph has a cycle")
+    print("Graph 2 has a cycle")
 else:
-    print("Graph has no cycle")
+    print("Graph 2 has no cycle")
