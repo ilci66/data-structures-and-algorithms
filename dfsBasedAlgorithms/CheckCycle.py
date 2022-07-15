@@ -26,9 +26,9 @@ class Graph():
         visited = [False] * self.V
         tempStack =  [False] * self.V
 
-        for edge in range(self.V):
-            if visited[edge] == False:
-                if self.isCyclicUtil(edge, visited, tempStack) == True:
+        for vertex in range(self.V):
+            if visited[vertex] == False:
+                if self.isCyclicUtil(vertex, visited, tempStack) == True:
                     return True
 
         return False
