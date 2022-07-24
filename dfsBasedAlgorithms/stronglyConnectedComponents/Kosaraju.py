@@ -1,10 +1,4 @@
-# TODO: Perform DFS, push node to stack before returning
-
-# TODO: Find the transpose graph by reversing the edges (create another graph)
-
-# TODO: Pop nodes oen by one from stack and again do DFS on modified (new) graph, each successful DFS gives 1 -> SCC
 from collections import defaultdict
-
 
 class Graph:
     def __init__(self, V):
@@ -19,28 +13,41 @@ class Graph:
         for i in self.graph[v]:
             if not visited[i]:
                 self.stack_order(visited, stack, i)
-        stack.append(v)
+        stack = stack.append(v)
 
-    def transpose(self, visited, v):
-        newG = Graph(self.V)
-
-        # for i in self.graph:
-
+    def transpose(self):
+        new_g = Graph(self.V)
+        for i in self.graph:
+            for j in self.graph[i]:
+                new_g.add_edge(j, i)
+        return new_g
 
     def dfs(self, visited, v):
         visited[v] = True
+        print(v)
         for i in self.graph[v]:
             if not visited[i]:
-                self.dfs(visited, v)
+                self.dfs(visited, i)
 
     def get_scc(self):
         visited = [False] * self.V
         stack = []
 
-        for v in self.graph:
+        # TODO: Perform DFS, push node to stack before returning
+        for v in range(self.V):
             if not visited[v]:
                 self.stack_order(visited, stack, v)
 
+        # TODO: Find the transpose graph by reversing the edges (create another graph)
+        g = self.transpose()
+
+        # TODO: Pop nodes oen by one from stack and again do DFS on modified (new) graph, each successful DFS gives 1 -> SCC
+        visited = [False] * self.V
+        while stack:
+            popped = stack.pop()
+            if not visited[popped]:
+                g.dfs(visited, popped, [])
+                print("----")
 
 if __name__ == '__main__':
     g = Graph(5)
@@ -49,3 +56,5 @@ if __name__ == '__main__':
     g.add_edge(2, 1)
     g.add_edge(0, 3)
     g.add_edge(3, 4)
+
+    g.get_scc()
